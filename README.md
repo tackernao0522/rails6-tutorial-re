@@ -269,6 +269,6 @@ production:
 
 + `$ heroku run rails assets:precompile`を実行<br>
 
-+ `$ heroku container:reloase web`を実行<br>
++ `$ heroku container:release web`を実行<br>
 
 + `$ heroku open`でアクセスできる<br>
