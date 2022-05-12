@@ -191,3 +191,9 @@ end
 + `app# rails db:migrate`を実行<br>
 
 + `$ docker compose -f docker-compose.prod.yml up`でproduction serverを起動できる localhost:3000 になる`<br>
+
+## herokuへのデプロイ
+
++ `$ heroku login`を実行<br>
+
++ `$ heroku container:login`を実行<br>
