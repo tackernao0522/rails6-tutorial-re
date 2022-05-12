@@ -265,10 +265,12 @@ production:
 ```
 + `$ heroku addons:create heroku-postgresql:hobby-dev`を実行<br>
 
++ $ `heroku container:push web`を実行<br>
+
++ `$ heroku container:release web`を実行<br>
+
 + `$ heroku run rails db:migrate`を実行<br>
 
 + `$ heroku run rails assets:precompile`を実行<br>
-
-+ `$ heroku container:release web`を実行<br>
 
 + `$ heroku open`でアクセスできる<br>
