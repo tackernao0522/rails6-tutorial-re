@@ -326,3 +326,181 @@ end
     book</a>.
 </p>
 ```
+
+## 3.3.1 最初のテスト
+
++ `$ rails db:migrate` (システムによっては必要)<br>
+
++ `$ rails test`を実行<br>
+
+```:terminal
+[+] Running 1/0
+ ⠿ Container rails-db  Running                                                                                                                                                                                0.0s
+Running via Spring preloader in process 18
+Running via Spring preloader in process 23
+Run options: --seed 14411
+
+# Running:
+
+..
+
+Finished in 49.939128s, 0.0400 runs/s, 0.0400 assertions/s.
+2 runs, 2 assertions, 0 failures, 0 errors, 0 skips
+```
+
++ `test/controllers/static_pages_controller_test.rb`を編集<br>
+
+```rb:static_pages_controller_test.rb
+require "test_helper"
+
+class StaticPagesControllerTest < ActionDispatch::IntegrationTest
+  test "should get home" do
+    get static_pages_home_url
+    assert_response :success
+  end
+
+  test "should get help" do
+    get static_pages_help_url
+    assert_response :success
+  end
+
+  test "should get about" do
+    get static_pages_about_url
+    assert_response :success
+  end
+end
+```
+
++ `$ rails text`を実行<br>
+
+```:terminal
+[+] Running 1/0
+ ⠿ Container rails-db  Running                                                                                                                                                                                0.0s
+Running via Spring preloader in process 18
+Run options: --seed 141
+
+# Running:
+
+..E
+
+Error:
+StaticPagesControllerTest#test_should_get_about:
+NameError: undefined local variable or method `static_pages_about_url' for #<StaticPagesControllerTest:0x00005598cd30bd10>
+    test/controllers/static_pages_controller_test.rb:15:in `block in <class:StaticPagesControllerTest>'
+
+
+rails test test/controllers/static_pages_controller_test.rb:14
+
+
+
+Finished in 4.874772s, 0.6154 runs/s, 0.4103 assertions/s.
+3 runs, 2 assertions, 0 failures, 1 errors, 0 skips
+```
+
++ `config/routes.rb`を編集<br>
+
+```rb:routes.rb
+Rails.application.routes.draw do
+  get 'static_pages/home'
+  get 'static_pages/help'
+  get 'static_pages/about'
+  root 'application#hello'
+end
+```
+
++ `rails test`を実行<br>
+
+```:terminal
+[+] Running 1/0
+ ⠿ Container rails-db  Running                                                                                                                                                                                0.0s
+Running via Spring preloader in process 17
+Run options: --seed 62723
+
+# Running:
+
+E
+
+Error:
+StaticPagesControllerTest#test_should_get_about:
+RuntimeError: Wrapped undumpable exception for: AbstractController::ActionNotFound: The action 'about' could not be found for StaticPagesController
+    test/controllers/static_pages_controller_test.rb:15:in `block in <class:StaticPagesControllerTest>'
+
+
+rails test test/controllers/static_pages_controller_test.rb:14
+
+..
+
+Finished in 8.492840s, 0.3532 runs/s, 0.2355 assertions/s.
+3 runs, 2 assertions, 0 failures, 1 errors, 0 skips
+```
+
++ `app/controllers/static_pages_controller.rb`を編集<br>
+
+```rb:static_pages_controller.rb
+class StaticPagesController < ApplicationController
+  def home
+  end
+
+  def help
+  end
+
+  def about
+  end
+end
+```
+
++ `$ rails test`を実行<br>
+
+```:terminal
+[+] Running 1/0
+ ⠿ Container rails-db  Running                                                                                                                                                                                0.0s
+Running via Spring preloader in process 16
+Run options: --seed 24194
+
+# Running:
+
+E
+
+Error:
+StaticPagesControllerTest#test_should_get_about:
+ActionController::MissingExactTemplate: StaticPagesController#about is missing a template for request formats: text/html
+    test/controllers/static_pages_controller_test.rb:15:in `block in <class:StaticPagesControllerTest>'
+
+
+rails test test/controllers/static_pages_controller_test.rb:14
+
+..
+
+Finished in 2.425876s, 1.2367 runs/s, 0.8244 assertions/s.
+3 runs, 2 assertions, 0 failures, 1 errors, 0 skips
+```
+
++ `$ touch app/views/static_pages/about.html.erb`を実行<br>
+
++ `app/views/static_pages/about.html.erb`を編集<br>
+
+```erb:about.html.erb
+<h1>About</h1>
+<p>
+  <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>
+  is a <a href="https://railstutorial.jp/#ebook">book</a> and
+  to teach web development with
+  <a href="https://rubyonrails.org/">Ruby on Rails</a>.
+  This is the sample application for the tutorial.
+</p>
+```
+
++ `$ rails test`を実行<br>
+
+```:terminal
+ ⠿ Container rails-db  Running                                                                                                                                                                                0.0s
+Running via Spring preloader in process 16
+Run options: --seed 21258
+
+# Running:
+
+...
+
+Finished in 2.458235s, 1.2204 runs/s, 1.2204 assertions/s.
+3 runs, 3 assertions, 0 failures, 0 errors, 0 skips
+```
