@@ -1,8 +1,8 @@
                                   Prefix Verb   URI Pattern                                                                                       Controller#Action
+                                    root GET    /                                                                                                 static_pages#home
                        static_pages_home GET    /static_pages/home(.:format)                                                                      static_pages#home
                        static_pages_help GET    /static_pages/help(.:format)                                                                      static_pages#help
                       static_pages_about GET    /static_pages/about(.:format)                                                                     static_pages#about
-                                    root GET    /                                                                                                 application#hello
            rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                           action_mailbox/ingresses/postmark/inbound_emails#create
               rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                              action_mailbox/ingresses/relay/inbound_emails#create
            rails_sendgrid_inbound_emails POST   /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                           action_mailbox/ingresses/sendgrid/inbound_emails#create
