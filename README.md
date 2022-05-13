@@ -278,3 +278,51 @@ production:
 ## 3.2.1 静的なページの作成
 
 + `$ rails g controller StaticPages home help`を実行<br>
+
+## 3.8 StaticPagesコントローラ内の`home`アクションと`help`アクションで使うルーティング
+
++ `app/controllers/ApplicactionController.rb`を編集<br>
+
+```rb:ApplicactionController.rb
+class ApplicationController < ActionController::Base
+  def hello
+    render html: "hello, world!"
+  end
+end
+```
+
++ `config/routes.rb`を編集<br>
+
+```rb:routes.rb
+Rails.application.routes.draw do
+  get 'static_pages/home'
+  get 'static_pages/help'
+  root 'application#hello'
+end
+```
+
+## 3.2.2 静的なページの調整
+
++ `app/views/static_pages/home.html.erb`を編集<br>
+
+```erb:home.html.erb
+<h1>Sample App</h1>
+<p>
+  This is the home page for the
+  <a href="https://railstutorial.jp/">Ruby on Rails Tutorial</a>
+  Sample application.
+</p>
+```
+
++ `app/views/static_pages/help.html.erb`を編集<br>
+
+```erb:help.html.erb
+<h1>Help</h1>
+<p>
+  Get help on the Ruby on Rails Tutorial at the
+  <a href="https://railstutorial.jp/help">Rails Tutorial help page</a>.
+  To get help on this sample app, see the
+  <a href="https://railstutorial.jp/#ebook"><em>Ruby on Rails Tutorial</em>
+    book</a>.
+</p>
+```
