@@ -25,9 +25,9 @@ COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
 COPY . /app
 
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+# COPY entrypoint.sh /usr/bin/
+# RUN chmod +x /usr/bin/entrypoint.sh
+# ENTRYPOINT ["entrypoint.sh"]
 
 # 以下の記述を追加
 # ENV RAILS_ENV=production
