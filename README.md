@@ -274,3 +274,7 @@ production:
 + `$ heroku run rails assets:precompile`を実行<br>
 
 + `$ heroku open`でアクセスできる<br>
+
+## 3.2.1 静的なページの作成
+
++ `$ rails g controller StaticPages home help`を実行<br>
