@@ -22,6 +22,12 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# コンソールの出力結果を見やすく表示する
+gem 'hirb', '~> 0.7.3'
+
+# Hirbの文字列補正を行う
+gem 'hirb-unicode-steakknife', '~> 0.0.9'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -45,6 +51,8 @@ group :development do
 end
 
 group :test do
+  # テスト結果色付け Doc: https://github.com/kern/minitest-reporters
+  gem 'minitest-reporters', '~> 1.1', '>= 1.1.11'
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
