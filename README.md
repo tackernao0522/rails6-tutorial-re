@@ -2,6 +2,8 @@
 
 https://qiita.com/maru401/items/2f5815c40fcf6d2d80d6#web-process-failed-to-bind-to-port-within-60-seconds-of-launch<br>
 
+https://qiita.com/maru401/items/2f5815c40fcf6d2d80d6<br>
+
 + 開発環境は localhost:3200 でアクセス<br>
 
 ## 本番環境への動作確認
