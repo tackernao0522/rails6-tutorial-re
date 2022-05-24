@@ -30,6 +30,6 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
 # 以下の記述を追加
-# ENV RAILS_ENV=production
+ENV RAILS_ENV=production
 
 CMD bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
