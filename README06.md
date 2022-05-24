@@ -1219,14 +1219,12 @@ test:
 #
 # 編集
 production:
-  adapter: postgresql
-  encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # https://railsguides.jp/configuring.html#データベース接続をプールする
+  <<: *default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  database: sample_app_production
-  username: sample_app
-  password: <%= ENV['SAMPLE_APP_DATABASE_PASSWORD'] %>
+  database: app_production
+  username: <%= ENV['DB_USERNAME'] || 'postgres' %>
+  host: <%= ENV['DB_HOST'] || 'db' %>
+  password: <%= ENV['DB_PASSWORD'] || '12345678' %>
 # ここまで
 ```
 
