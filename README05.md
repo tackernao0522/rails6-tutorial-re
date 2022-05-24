@@ -395,3 +395,263 @@ Finished in 0.83508s
 ```:terminal
 => true
 ```
+
+# 第7章 ユーザー登録
+
+## 7.1.1 デバッグとRails環境
+
+### リスト 7.1: サイトのレイアウトにデバッグ情報を追加する
+
++ `app/views/layouts/application.html.erb`を編集<br>
+
+```html:application.html.erb
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= full_title(yield(:title)) %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  <%= render 'layouts/shim' %>
+</head>
+
+<body>
+  <%= render 'layouts/header' %>
+  <div class="container">
+    <%= yield %>
+    <%= render 'layouts/footer' %>
+    <!-- 追加 -->
+    <%= debug(params) if Rails.env.development? %>
+  </div>
+</body>
+
+</html>
+```
+
++ `app/assets/stylesheets/custom.scss`を編集<br>
+
+```scss:custom.scss
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+
+/* mixins, variables, etc. */
+
+$gray-medium-light: #eaeaea;
+
+@mixin box_sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* universal */
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center {
+  text-align: center;
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+/* typography */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: $gray-light;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+/* header */
+
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $gray-medium-light;
+  color: $gray-light;
+  a {
+    color: $gray;
+    &:hover {
+      color: $gray-darker;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
+}
+
+// 追加
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
+// ここまで
+```
+
++ `config/routes.rb`を編集<br>
+
+```rb:routes.rb
+Rails.application.routes.draw do
+  root 'static_pages#home'
+  get '/help',    to: 'static_pages#help'
+  get '/about',   to: 'static_pages#about'
+  get '/contact', to: 'static_pages#contact'
+  get '/signup', to: 'users#new'
+  resources :users # 追加
+end
+```
+
+## リスト 7.4: ユーザー情報を表示する為の仮のビュー
+
++ `touch app/views/users/show.html.erb`を実行<br>
+
++ `app/views/users/show.html.erb`を編集<br>
+
+```html:show.html.erb
+<%= @user.name %>, <%= @user.email %>
+```
+
+## リスト 7.5: Usersコントローラの`show`アクション
+
++ `app/controllers/users_controller.rb`を編集<br>
+
+```rb:users_controller.rb
+class UsersController < ApplicationController
+
+  def show
+    @user = User.find(params[:id])
+  end
+
+  def new
+  end
+end
+```
+
++ localhost:3200/users/1 にアクセスしてみる<br>
+
+## リスト 7.6: `debugger`をUsersコントローラに差し込む
+
++ `app/controllers/users_controller.rb`を編集<br>
+
+```rb:users_controller.rb
+class UsersController < ApplicationController
+
+  def show
+    @user = User.find(params[:id])
+    debugger # 追加
+  end
+
+  def new
+  end
+end
+```
+
+参考: http://www.code-magagine.com/?p=8697<br>
+
++ `$ docker attach rails-web`を実行<br>
+
+```:terminal
+Started GET "/users/1" for 172.26.0.1 at 2022-05-23 11:54:45 +0000
+Cannot render console from 172.26.0.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by UsersController#show as HTML
+  Parameters: {"id"=>"1"}
+  User Load (1.8ms)  SELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:4:in `show'
+Return value is: nil
+
+[1, 10] in /app/app/controllers/users_controller.rb
+    1: class UsersController < ApplicationController
+    2:
+    3:   def show
+    4:     @user = User.find(params[:id])
+    5:     debugger
+=>  6:   end
+    7:
+    8:   def new
+    9:   end
+   10: end
+(byebug)
+```
+
+```:terminal
+(byebug) @user.name
+"Michael Hartl"
+(byebug) @user.email
+"michael@example.com"
+(byebug) params[:id]
+"1"
+```
+
++ `quit`で抜ける<br>
+
++ `debugger`を外す<br>
