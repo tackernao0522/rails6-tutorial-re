@@ -449,3 +449,21 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 end
 ```
+
++ `$ git push`を実行<br>
+
++ `$ git push heroku`を実行<br>
+
++ `$ heroku run rails db:migrate`を実行<br>
+
++ `$ heroku addons:create mailgun:starter`を実行<br>
+
++ `$ heroku config:get MAILGUN_SMTP_LOGIN`を実行<br>
+
++ `$ heroku config:get MAILGUN_SMTP_PASSWORD`を実行<br>
+
++ `$ heroku addons:open mailgun`を実行<br>
+
++ `「Sending」-> 「Domains」のリストにある「sandbox」で始まるサンドボックスドメインを選択する<br>
+
++ 「Authorized Recipients」から受信メールアドレスを認証し、本番環境でのメール送信準備は完了です。<br>
