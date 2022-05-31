@@ -1,4 +1,6 @@
                                   Prefix Verb   URI Pattern                                                                                       Controller#Action
+                     password_resets_new GET    /password_resets/new(.:format)                                                                    password_resets#new
+                    password_resets_edit GET    /password_resets/edit(.:format)                                                                   password_resets#edit
                             sessions_new GET    /sessions/new(.:format)                                                                           sessions#new
                                     root GET    /                                                                                                 static_pages#home
                                     help GET    /help(.:format)                                                                                   static_pages#help
@@ -17,6 +19,11 @@
                                          PUT    /users/:id(.:format)                                                                              users#update
                                          DELETE /users/:id(.:format)                                                                              users#destroy
                  edit_account_activation GET    /account_activations/:id/edit(.:format)                                                           account_activations#edit
+                         password_resets POST   /password_resets(.:format)                                                                        password_resets#create
+                      new_password_reset GET    /password_resets/new(.:format)                                                                    password_resets#new
+                     edit_password_reset GET    /password_resets/:id/edit(.:format)                                                               password_resets#edit
+                          password_reset PATCH  /password_resets/:id(.:format)                                                                    password_resets#update
+                                         PUT    /password_resets/:id(.:format)                                                                    password_resets#update
            rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                           action_mailbox/ingresses/postmark/inbound_emails#create
               rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                              action_mailbox/ingresses/relay/inbound_emails#create
            rails_sendgrid_inbound_emails POST   /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                           action_mailbox/ingresses/sendgrid/inbound_emails#create
