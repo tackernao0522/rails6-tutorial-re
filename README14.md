@@ -665,3 +665,6 @@ end
 
 + `$ rails test`を実行(GREEN)
 
++ Herokuにデプロイする(db:migrateを忘れずに)<br>
+
++ `$ heroku addons:open mailgun`を実行<br>
