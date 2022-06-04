@@ -20,6 +20,10 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
+gem 'aws-sdk-s3',              '1.46.0', require: false
+gem 'image_processing',           '1.9.3'
+gem 'mini_magick',                '4.9.5'
+gem 'active_storage_validations', '0.8.2'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'faker', '2.20.0'
@@ -31,9 +35,6 @@ gem 'hirb', '~> 0.7.3'
 
 # Hirbの文字列補正を行う
 gem 'hirb-unicode-steakknife', '~> 0.0.9'
-
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

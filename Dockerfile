@@ -14,7 +14,9 @@ RUN apt-get update -qq && \
     apt-get install -y build-essential \
     libpq-dev \
     sudo  \
-    vim
+    vim \
+    g++ \
+    imagemagick
 
 RUN yarn add node-sass
 
