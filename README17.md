@@ -673,7 +673,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
-gem 'aws-sdk-s3',              '1.46.0', require: false # 追加
+gem 'aws-sdk-s3',              '1.48.0', require: false # 追加
 gem 'image_processing',           '1.9.3'
 gem 'mini_magick',                '4.9.5'
 gem 'active_storage_validations', '0.8.2'
