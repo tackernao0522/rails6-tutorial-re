@@ -917,3 +917,17 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 end
 ```
+
++ `git add -A`<br>
+
++ `git commit -m "Add user microposts"<br>
+
++ `$ dokcer compose build`<br>
+
++ `$ git push -u origin HEAD`<br>
+
++ `$ git switch main`<br>
+
++ `$ git pull`<br>
+
++ Herokuへデプロイ<br>
