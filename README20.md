@@ -806,4 +806,4 @@ end
 
 + `$ heroku run rails db:migrate`<br>
 
-+ `$heroku run rails db:seed`<br>
++ `$ heroku run rails db:seed`<br>
