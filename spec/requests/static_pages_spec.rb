@@ -8,9 +8,10 @@ RSpec.describe 'StaticPages', type: :request do
       get root_path
       expect(response).to have_http_status :ok
     end
-    it 'Ruby on Rails Tutorial Sample Appが含まれること' do
+
+    it 'titleがRuby on Rails Tutorial Sample Appであること' do
       get root_path
-      expect(response.body).to include "#{base_title}"
+      expect(response.body).to include "<title>#{base_title}</title>"
     end
   end
 
