@@ -1,7 +1,4 @@
                                   Prefix Verb   URI Pattern                                                                                       Controller#Action
-                     password_resets_new GET    /password_resets/new(.:format)                                                                    password_resets#new
-                    password_resets_edit GET    /password_resets/edit(.:format)                                                                   password_resets#edit
-                            sessions_new GET    /sessions/new(.:format)                                                                           sessions#new
                                     root GET    /                                                                                                 static_pages#home
                                     help GET    /help(.:format)                                                                                   static_pages#help
                                    about GET    /about(.:format)                                                                                  static_pages#about
@@ -10,6 +7,8 @@
                                    login GET    /login(.:format)                                                                                  sessions#new
                                          POST   /login(.:format)                                                                                  sessions#create
                                   logout DELETE /logout(.:format)                                                                                 sessions#destroy
+                          following_user GET    /users/:id/following(.:format)                                                                    users#following
+                          followers_user GET    /users/:id/followers(.:format)                                                                    users#followers
                                    users GET    /users(.:format)                                                                                  users#index
                                          POST   /users(.:format)                                                                                  users#create
                                 new_user GET    /users/new(.:format)                                                                              users#new
@@ -26,6 +25,8 @@
                                          PUT    /password_resets/:id(.:format)                                                                    password_resets#update
                               microposts POST   /microposts(.:format)                                                                             microposts#create
                                micropost DELETE /microposts/:id(.:format)                                                                         microposts#destroy
+                           relationships POST   /relationships(.:format)                                                                          relationships#create
+                            relationship DELETE /relationships/:id(.:format)                                                                      relationships#destroy
            rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                           action_mailbox/ingresses/postmark/inbound_emails#create
               rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                              action_mailbox/ingresses/relay/inbound_emails#create
            rails_sendgrid_inbound_emails POST   /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                           action_mailbox/ingresses/sendgrid/inbound_emails#create
