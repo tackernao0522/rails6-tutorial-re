@@ -378,3 +378,174 @@ RSpec.describe 'StaticPages', type: :request do
   end
 end
 ```
+
+# コード例 第5章
+
++ `$ rails g rspec:system static_pages`を実行<br>
+
+## リスト 5.32
+
++ `spec/system/static_pages_spec.rb`を編集<br>
+
+```rb:static_pages_spec.rb
+require 'rails_helper'
+
+RSpec.describe "StaticPages", type: :system do
+  before do
+    driven_by(:rack_test)
+  end
+
+  describe 'root' do
+    it 'root_pathへのリンクが2つ。help, about, contactへのリンクが表示されていること' do
+      visit root_path
+      link_to_root = page.find_all("a[href=\"#{root_path}\"]")
+
+      expect(link_to_root.size).to eq 2
+      expect(page).to have_link 'Help', href: help_path
+      expect(page).to have_link 'About', href: about_path
+      expect(page).to have_link 'Contact', href: contact_path
+    end
+  end
+end
+```
+
++ `spec/rails_helper.rb`を編集<br>
+
+```rb:rails_helper.rb
+# This file is copied to spec/ when you run 'rails generate rspec:install'
+require 'spec_helper'
+ENV['RAILS_ENV'] ||= 'test'
+require_relative '../config/environment'
+# Prevent database truncation if the environment is production
+abort("The Rails environment is running in production mode!") if Rails.env.production?
+require 'rspec/rails'
+# Add additional requires below this line. Rails is not loaded until this point!
+
+# Requires supporting ruby files with custom matchers and macros, etc, in
+# spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
+# run as spec files by default. This means that files in spec/support that end
+# in _spec.rb will both be required and run as specs, causing the specs to be
+# run twice. It is recommended that you do not name files matching this glob to
+# end with _spec.rb. You can configure this pattern with the --pattern
+# option on the command line or in ~/.rspec, .rspec or `.rspec-local`.
+#
+# The following line is provided for convenience purposes. It has the downside
+# of increasing the boot-up time by auto-requiring all files in the support
+# directory. Alternatively, in the individual `*_spec.rb` files, manually
+# require only the support files necessary.
+#
+# Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+
+# Checks for pending migrations and applies them before tests are run.
+# If you are not using ActiveRecord, you can remove these lines.
+begin
+  ActiveRecord::Migration.maintain_test_schema!
+rescue ActiveRecord::PendingMigrationError => e
+  puts e.to_s.strip
+  exit 1
+end
+RSpec.configure do |config|
+  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+
+  # If you're not using ActiveRecord, or you'd prefer not to run each of your
+  # examples within a transaction, remove the following line or assign false
+  # instead of true.
+  config.use_transactional_fixtures = true
+
+  # You can uncomment this line to turn off ActiveRecord support entirely.
+  # config.use_active_record = false
+
+  # RSpec Rails can automatically mix in different behaviours to your tests
+  # based on their file location, for example enabling you to call `get` and
+  # `post` in specs under `spec/controllers`.
+  #
+  # You can disable this behaviour by removing the line below, and instead
+  # explicitly tag your specs with their type, e.g.:
+  #
+  #     RSpec.describe UsersController, type: :controller do
+  #       # ...
+  #     end
+  #
+  # The different available types are documented in the features, such as in
+  # https://relishapp.com/rspec/rspec-rails/docs
+  config.infer_spec_type_from_file_location!
+
+  # Filter lines from Rails gems in backtraces.
+  config.filter_rails_from_backtrace!
+  # arbitrary gems may also be filtered via:
+  # config.filter_gems_from_backtrace("gem name")
+  include ApplicationHelper # 追加
+end
+```
+
+## リスト5.37
+
++ `$ mkdir spec/helpers && touch $_/application_helper_spec.rb`を実行<br>
+
++ `spec/helpers/application_helper_spec.rb`を編集<br>
+
+```rb:application_helper_spec.rb
+require 'rails_helper'
+
+RSpec.describe ApplicationHelper, type: :helper do
+  describe 'full_title' do
+    let (:base_title) { 'Ruby on Rails Tutorial Sample App' }
+
+    context '引数を渡した場合' do
+      it '引数の文字列とベースタイトルが返ること' do
+        expect(full_title('Page Title')).to eq "Page Title | #{base_title}"
+      end
+    end
+
+    context '引数がなかった場合' do
+      it 'ベースタイトルのみが返ること' do
+        expect(full_title).to eq "#{base_title}"
+      end
+    end
+  end
+end
+```
+
+## リスト5.44
+
++ `$ rails g rspec:request users`を実行<br>
+
++ `spec/requests/users_spec.rb`を編集<br>
+
+```rb:users_spec.rb
+require 'rails_helper'
+
+RSpec.describe "Users", type: :request do
+  describe "GET /signup" do
+    it "returns http success" do
+      get signup_path
+      expect(response).to have_http_status(:ok)
+    end
+  end
+end
+```
+
+## 5.4.2 演習3
+
++ `spec/requests/users_spec.rb`を編集<br>
+
+```rb:users_spec.rb
+require 'rails_helper'
+
+RSpec.describe "Users", type: :request do
+  describe "GET /signup" do
+    it "returns http success" do
+      get signup_path
+      expect(response).to have_http_status(:ok)
+    end
+
+    # 追加
+    it 'Signup | Ruby on Rails Tutorial Sample Appが含まれること' do
+      get signup_path
+      expect(response.body).to include full_title('Sign up')
+    end
+    # ここまで
+  end
+end
+```
